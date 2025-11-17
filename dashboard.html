@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Noayck Dashboard</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="dashboard-page">
+  <aside class="sidebar">
+    <a href="index.html" class="brand">Noayck</a>
+    <nav class="side-nav">
+      <a href="dashboard.html" class="active">Overview</a>
+      <a href="members.html">Members</a>
+      <a href="courses.html">Courses</a>
+      <a href="resources.html">Resources</a>
+      <a href="settings.html">Settings</a>
+      <a href="index.html" class="logout">Sign out</a>
+    </nav>
+  </aside>
+  <main class="main-content">
+    <header class="topbar">
+      <div class="search">
+        <input id="searchInput" placeholder="Search members, courses, resources...">
+      </div>
+      <div class="top-actions">
+        <button id="notificationsBtn">🔔</button>
+        <div class="profile">
+          <img src="https://avatars.githubusercontent.com/u/9919?s=40&v=4" alt="avatar">
+          <span>Admin</span>
+        </div>
+      </div>
+    </header>
+    <section class="dashboard-grid container">
+      <div class="card stats">
+        <div class="stat">
+          <h4>Members</h4>
+          <p id="membersCount">—</p>
+        </div>
+        <div class="stat">
+          <h4>Active Courses</h4>
+          <p id="coursesCount">—</p>
+        </div>
+        <div class="stat">
+          <h4>Revenue (30d)</h4>
+          <p id="revenueVal">$0</p>
+        </div>
+      </div>
+      <div class="card chart-card">
+        <h3>Revenue trend</h3>
+        <canvas id="revenueChart"></canvas>
+      </div>
+      <div class="card table-card">
+        <h3>Recent signups</h3>
+        <table id="recentTable">
+          <thead><tr><th>Name</th><th>Email</th><th>Plan</th><th>Date</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="card quick-actions">
+        <h3>Quick actions</h3>
+        <div class="actions-grid">
+          <button id="newCourse">Create Course</button>
+          <button id="emailMembers">Email Members</button>
+          <button id="exportData">Export CSV</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="assets/js/app.js"></script>
+  <script src="assets/js/dashboard.js"></script>
+</body>
+</html>
