@@ -1,46 +1,1223 @@
-<!-- Updated navigation and sections -->
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <title>Noyack Dashboard</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noyack - Financial Wealth Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f7fa;
+            color: #2d3748;
+        }
+
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            background: #1e3a8a;
+            color: white;
+            padding: 24px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+
+        .logo {
+            padding: 0 24px 32px;
+            font-size: 28px;
+            font-weight: bold;
+            color: #60d4f7;
+        }
+
+        .nav-item {
+            padding: 14px 24px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left: 4px solid #60d4f7;
+            padding-left: 20px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 240px;
+            padding: 24px;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            padding: 20px 32px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .search-bar {
+            flex: 1;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            background: #1e3a8a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .upgrade-badge {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0,0,0,0.12);
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #1e3a8a;
+            margin-bottom: 12px;
+        }
+
+        .stat-change {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .stat-change.positive { color: #10b981; }
+        .stat-change.negative { color: #ef4444; }
+
+        /* Quick Actions */
+        .quick-actions {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #1e3a8a;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px;
+        }
+
+        .action-btn {
+            padding: 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .action-btn:hover {
+            border-color: #1e3a8a;
+            background: #f8fafc;
+            transform: translateY(-2px);
+        }
+
+        .action-icon {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .action-label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #475569;
+        }
+
+        /* Financial Overview */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+
+        .chart-placeholder {
+            height: 300px;
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        /* Goals Section */
+        .goals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .goal-item {
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid #1e3a8a;
+        }
+
+        .goal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .goal-name {
+            font-weight: 600;
+            color: #1e3a8a;
+        }
+
+        .goal-percentage {
+            font-size: 14px;
+            font-weight: 600;
+            color: #10b981;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #1e3a8a 0%, #60d4f7 100%);
+            border-radius: 4px;
+            transition: width 0.5s;
+        }
+
+        /* Upcoming Events */
+        .events-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .event-item {
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+        }
+
+        .event-date {
+            background: #1e3a8a;
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .event-day {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .event-month {
+            font-size: 12px;
+            text-transform: uppercase;
+        }
+
+        .event-details {
+            flex: 1;
+        }
+
+        .event-title {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+        }
+
+        .event-time {
+            font-size: 13px;
+            color: #64748b;
+        }
+
+        /* Learning Progress */
+        .learning-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .course-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+        }
+
+        .course-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .course-image {
+            height: 160px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+        }
+
+        .course-content {
+            padding: 20px;
+        }
+
+        .course-title {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 8px;
+        }
+
+        .course-progress {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 12px;
+        }
+
+        .continue-btn {
+            width: 100%;
+            padding: 10px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .continue-btn:hover {
+            background: #1e40af;
+        }
+
+        /* Achievements */
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 16px;
+        }
+
+        .achievement-badge {
+            text-align: center;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 12px;
+            transition: all 0.3s;
+        }
+
+        .achievement-badge:hover {
+            background: #1e3a8a;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .badge-icon {
+            font-size: 40px;
+            margin-bottom: 8px;
+        }
+
+        .badge-label {
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* Recent Activity */
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .activity-item {
+            display: flex;
+            gap: 16px;
+            padding: 16px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .activity-icon {
+            width: 40px;
+            height: 40px;
+            background: #1e3a8a;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
+            font-weight: 600;
+            color: #1e3a8a;
+            margin-bottom: 4px;
+        }
+
+        .activity-time {
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .overview-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+            }
+
+            .main-content {
+                margin-left: 70px;
+            }
+
+            .nav-item span {
+                display: none;
+            }
+
+            .logo {
+                font-size: 18px;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            margin-bottom: -2px;
+            color: #64748b;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .tab:hover, .tab.active {
+            color: #1e3a8a;
+            border-bottom-color: #1e3a8a;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            padding: 12px 24px;
+            background: #1e3a8a;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+
+        .btn-primary:hover {
+            background: #1e40af;
+        }
+
+        .btn-secondary {
+            padding: 12px 24px;
+            background: white;
+            color: #1e3a8a;
+            border: 2px solid #1e3a8a;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: #1e3a8a;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    <nav>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#services">Services</a></li>
-            <li><a href="#contact">Contact</a></li>
-            <li><a href="#extended">Extended Sections</a></li>
-        </ul>
-    </nav>
-    
-    <main>
-        <h1>Welcome to the Noyack Dashboard</h1>
-        <section id="home">
-            <h2>Home</h2>
-            <p>Your main dashboard overview...</p>
-        </section>
-        <section id="about">
-            <h2>About</h2>
-            <p>Information about the dashboard...</p>
-        </section>
-        <section id="services">
-            <h2>Services</h2>
-            <p>Details of services offered...</p>
-        </section>
-        <section id="contact">
-            <h2>Contact</h2>
-            <p>Contact information...</p>
-        </section>
-        <section id="extended">
-            <h2>Comprehensive Extended Sections</h2>
-            <p>Details for all missing areas have been added here...</p>
-        </section>
-    </main>
-    
-    <footer>
-        <p>&copy; 2025 Noyack. All rights reserved.</p>
-    </footer>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="logo">NOYACK</div>
+            <div class="nav-item active">
+                <span class="nav-icon">📊</span>
+                <span>Dashboard</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">🎯</span>
+                <span>Goals</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">💰</span>
+                <span>Budget</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">🧮</span>
+                <span>Calculators</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">📈</span>
+                <span>Investments</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">💳</span>
+                <span>Debt Payoff</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">📅</span>
+                <span>Events</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">🎓</span>
+                <span>Academy</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">📚</span>
+                <span>Library</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">👥</span>
+                <span>Community</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">👤</span>
+                <span>Profile</span>
+            </div>
+            <div class="nav-item">
+                <span class="nav-icon">⚙️</span>
+                <span>Settings</span>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Header -->
+            <div class="header">
+                <div class="search-bar">
+                    <input type="text" placeholder="Ask me anything about Financial Wealth...">
+                </div>
+                <div class="user-info">
+                    <div class="upgrade-badge">Premium Member</div>
+                    <div class="user-avatar">AA</div>
+                    <div>
+                        <div style="font-weight: 600;">Azmee Ahmed</div>
+                        <div style="font-size: 12px; color: #64748b;">Wealth IQ: 850</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Net Worth</div>
+                    <div class="stat-value">$45,320</div>
+                    <div class="stat-change positive">
+                        ↑ 12.5% this month
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Income</div>
+                    <div class="stat-value">$12,000</div>
+                    <div class="stat-change positive">
+                        ↑ $2,000 from last month
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Total Debt</div>
+                    <div class="stat-value">$0</div>
+                    <div class="stat-change positive">
+                        🎉 Debt Free!
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Monthly Expenses</div>
+                    <div class="stat-value">$0</div>
+                    <div class="stat-change" style="color: #64748b;">
+                        Update your budget
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Savings Rate</div>
+                    <div class="stat-value">42%</div>
+                    <div class="stat-change positive">
+                        ↑ 5% from target
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Investment Portfolio</div>
+                    <div class="stat-value">$28,450</div>
+                    <div class="stat-change positive">
+                        ↑ 8.2% YTD
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions">
+                <div class="section-title">Quick Actions</div>
+                <div class="actions-grid">
+                    <div class="action-btn" onclick="alert('Add Transaction')">
+                        <div class="action-icon">💵</div>
+                        <div class="action-label">Add Transaction</div>
+                    </div>
+                    <div class="action-btn" onclick="alert('Set New Goal')">
+                        <div class="action-icon">🎯</div>
+                        <div class="action-label">Set New Goal</div>
+                    </div>
+                    <div class="action-btn" onclick="alert('Run Calculator')">
+                        <div class="action-icon">🧮</div>
+                        <div class="action-label">Calculate</div>
+                    </div>
+                    <div class="action-btn" onclick="alert('Track Expense')">
+                        <div class="action-icon">📊</div>
+                        <div class="action-label">Track Expense</div>
+                    </div>
+                    <div class="action-btn" onclick="alert('Investment Analysis')">
+                        <div class="action-icon">📈</div>
+                        <div class="action-label">Analyze Investment</div>
+                    </div>
+                    <div class="action-btn" onclick="alert('Join Event')">
+                        <div class="action-icon">📅</div>
+                        <div class="action-label">Join Event</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tabs Section -->
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('overview')">Overview</div>
+                <div class="tab" onclick="switchTab('goals')">Goals</div>
+                <div class="tab" onclick="switchTab('learning')">Learning</div>
+                <div class="tab" onclick="switchTab('activity')">Activity</div>
+            </div>
+
+            <!-- Overview Tab -->
+            <div id="overview" class="tab-content active">
+                <div class="overview-grid">
+                    <div class="chart-card">
+                        <div class="section-title">Net Worth Trend</div>
+                        <div class="chart-placeholder">Interactive Chart: Net Worth Over Time (6 Months)</div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="section-title">Upcoming Events</div>
+                        <div class="events-list">
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-day">25</div>
+                                    <div class="event-month">NOV</div>
+                                </div>
+                                <div class="event-details">
+                                    <div class="event-title">Retirement Planning Webinar</div>
+                                    <div class="event-time">2:00 PM EST - Live with CFP</div>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-day">30</div>
+                                    <div class="event-month">NOV</div>
+                                </div>
+                                <div class="event-details">
+                                    <div class="event-title">Tax Optimization Workshop</div>
+                                    <div class="event-time">6:00 PM EST - Interactive Session</div>
+                                </div>
+                            </div>
+                            <div class="event-item">
+                                <div class="event-date">
+                                    <div class="event-day">05</div>
+                                    <div class="event-month">DEC</div>
+                                </div>
+                                <div class="event-details">
+                                    <div class="event-title">Real Estate Investment 101</div>
+                                    <div class="event-time">7:00 PM EST - Beginner Friendly</div>
+                                </div>
+                            </div>
+                        </div>
+                        <button class="btn-secondary" style="width: 100%; margin-top: 16px;">View All Events</button>
+                    </div>
+                </div>
+
+                <div class="overview-grid">
+                    <div class="chart-card">
+                        <div class="section-title">Income vs Expenses</div>
+                        <div class="chart-placeholder">Interactive Chart: Monthly Cash Flow Analysis</div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="section-title">Asset Allocation</div>
+                        <div class="chart-placeholder">Pie Chart: Portfolio Distribution</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Goals Tab -->
+            <div id="goals" class="tab-content">
+                <div class="chart-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+                        <div class="section-title" style="margin: 0;">Financial Goals</div>
+                        <button class="btn-primary">+ Add New Goal</button>
+                    </div>
+                    <div class="goals-list">
+                        <div class="goal-item">
+                            <div class="goal-header">
+                                <div class="goal-name">🏠 Down Payment for House</div>
+                                <div class="goal-percentage">75%</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 75%"></div>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 13px; color: #64748b;">
+                                $75,000 of $100,000 • Target: Dec 2026
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-header">
+                                <div class="goal-name">🚗 New Car Purchase</div>
+                                <div class="goal-percentage">45%</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 45%"></div>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 13px; color: #64748b;">
+                                $13,500 of $30,000 • Target: Jun 2025
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-header">
+                                <div class="goal-name">💼 Emergency Fund (6 months)</div>
+                                <div class="goal-percentage">90%</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%"></div>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 13px; color: #64748b;">
+                                $32,400 of $36,000 • Target: Feb 2025
+                            </div>
+                        </div>
+                        <div class="goal-item">
+                            <div class="goal-header">
+                                <div class="goal-name">✈️ Dream Vacation to Europe</div>
+                                <div class="goal-percentage">30%</div>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 30%"></div>
+                            </div>
+                            <div style="margin-top: 8px; font-size: 13px; color: #64748b;">
+                                $2,400 of $8,000 • Target: Aug 2025
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card" style="margin-top: 24px;">
+                    <div class="section-title">Goal Progress Overview</div>
+                    <div class="chart-placeholder">Interactive Chart: All Goals Progress Timeline</div>
+                </div>
+            </div>
+
+            <!-- Learning Tab -->
+            <div id="learning" class="tab-content">
+                <div class="chart-card" style="margin-bottom: 24px;">
+                    <div class="section-title">Your Learning Progress</div>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 24px;">
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px; font-weight: bold; color: #1e3a8a;">12</div>
+                            <div style="font-size: 14px; color: #64748b;">Courses Completed</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px; font-weight: bold; color: #1e3a8a;">3</div>
+                            <div style="font-size: 14px; color: #64748b;">In Progress</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px; font-weight: bold; color: #1e3a8a;">48hrs</div>
+                            <div style="font-size: 14px; color: #64748b;">Total Learning Time</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <div style="font-size: 32px; font-weight: bold; color: #1e3a8a;">850</div>
+                            <div style="font-size: 14px; color: #64748b;">Wealth IQ Score</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card" style="margin-bottom: 24px;">
+                    <div class="section-title">Continue Learning</div>
+                    <div class="learning-grid">
+                        <div class="course-card">
+                            <div class="course-image">📊</div>
+                            <div class="course-content">
+                                <div class="course-title">Advanced Portfolio Management</div>
+                                <div class="course-progress">Lesson 4 of 8 • 45% Complete</div>
+                                <div class="progress-bar" style="margin-bottom: 16px;">
+                                    <div class="progress-fill" style="width: 45%"></div>
+                                </div>
+                                <button class="continue-btn">Continue Learning</button>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">💰</div>
+                            <div class="course-content">
+                                <div class="course-title">Tax Optimization Strategies</div>
+                                <div class="course-progress">Lesson 2 of 6 • 25% Complete</div>
+                                <div class="progress-bar" style="margin-bottom: 16px;">
+                                    <div class="progress-fill" style="width: 25%"></div>
+                                </div>
+                                <button class="continue-btn">Continue Learning</button>
+                            </div>
+                        </div>
+                        <div class="course-card">
+                            <div class="course-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);">🏠</div>
+                            <div class="course-content">
+                                <div class="course-title">Real Estate Investing Basics</div>
+                                <div class="course-progress">Lesson 1 of 10 • 10% Complete</div>
+                                <div class="progress-bar" style="margin-bottom: 16px;">
+                                    <div class="progress-fill" style="width: 10%"></div>
+                                </div>
+                                <button class="continue-btn">Continue Learning</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div class="section-title">Achievements & Badges</div>
+                    <div class="achievements-grid">
+                        <div class="achievement-badge">
+                            <div class="badge-icon">🏆</div>
+                            <div class="badge-label">First Goal</div>
+                        </div>
+                        <div class="achievement-badge">
+                            <div class="badge-icon">💯</div>
+                            <div class="badge-label">Quiz Master</div>
+                        </div>
+                        <div class="achievement-badge">
+                            <div class="badge-icon">📚</div>
+                            <div class="badge-label">Book Worm</div>
+                        </div>
+                        <div class="achievement-badge">
+                            <div class="badge-icon">💪</div>
+                            <div class="badge-label">7 Day Streak</div>
+                        </div>
+                        <div class="achievement-badge">
+                            <div class="badge-icon">🎯</div>
+                            <div class="badge-label">Goal Crusher</div>
+                        </div>
+                        <div class="achievement-badge">
+                            <div class="badge-icon">👥</div>
+                            <div class="badge-label">Community Hero</div>
+                        </div>
+                        <div class="achievement-badge" style="opacity: 0.3;">
+                            <div class="badge-icon">🔥</div>
+                            <div class="badge-label">30 Day Streak</div>
+                        </div>
+                        <div class="achievement-badge" style="opacity: 0.3;">
+                            <div class="badge-icon">💎</div>
+                            <div class="badge-label">Wealth Master</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Activity Tab -->
+            <div id="activity" class="tab-content">
+                <div class="chart-card">
+                    <div class="section-title">Recent Activity</div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">✅</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Completed "Understanding Stock Market Basics"</div>
+                                <div class="activity-time">2 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">🎯</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Updated goal: Emergency Fund - Added $500</div>
+                                <div class="activity-time">5 hours ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">💰</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Transaction added: Salary Deposit +$6,000</div>
+                                <div class="activity-time">Yesterday</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📊</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Used Retirement Calculator - Projected $1.2M at 65</div>
+                                <div class="activity-time">2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📅</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Registered for "Tax Planning Workshop"</div>
+                                <div class="activity-time">3 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📚</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Downloaded "The Ultimate Retirement Planning Guide"</div>
+                                <div class="activity-time">4 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">💬</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Posted in Community: "Best index funds for beginners?"</div>
+                                <div class="activity-time">5 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">🏆</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Earned "7 Day Streak" achievement</div>
+                                <div class="activity-time">1 week ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="overview-grid" style="margin-top: 24px;">
+                    <div class="chart-card">
+                        <div class="section-title">Activity Heatmap</div>
+                        <div class="chart-placeholder">Calendar View: Daily Activity Over Last 90 Days</div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="section-title">Time Spent This Month</div>
+                        <div class="chart-placeholder">Breakdown: Learning, Tools, Community, Events</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bottom Section - Community & Resources -->
+            <div class="overview-grid" style="margin-top: 24px;">
+                <div class="chart-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div class="section-title" style="margin: 0;">Community Highlights</div>
+                        <button class="btn-secondary">Visit Forum</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">👤</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Sarah M. shared her debt-free journey</div>
+                                <div class="activity-time">142 reactions • 23 comments</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">💡</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Hot Topic: Best strategies for 2025 investing</div>
+                                <div class="activity-time">89 reactions • 45 comments</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📈</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Michael T. reached $100K net worth milestone</div>
+                                <div class="activity-time">256 reactions • 67 comments</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-card">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                        <div class="section-title" style="margin: 0;">Latest Resources</div>
+                        <button class="btn-secondary">Browse Library</button>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon">📄</div>
+                            <div class="activity-content">
+                                <div class="activity-title">2025 Tax Planning Guide</div>
+                                <div class="activity-time">PDF • 45 pages • Added yesterday</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">📊</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Q4 2024 Market Analysis Report</div>
+                                <div class="activity-time">PDF • 32 pages • Added 2 days ago</div>
+                            </div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-icon">🎥</div>
+                            <div class="activity-content">
+                                <div class="activity-title">Webinar Replay: Real Estate Investing</div>
+                                <div class="activity-time">Video • 1hr 23min • Added 3 days ago</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recommendations Section -->
+            <div class="chart-card" style="margin-top: 24px; background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%); border: 2px solid #667eea30;">
+                <div class="section-title">Personalized Recommendations</div>
+                <div class="actions-grid">
+                    <div class="action-btn" style="background: white;">
+                        <div class="action-icon">💼</div>
+                        <div class="action-label">Increase emergency fund by $500</div>
+                    </div>
+                    <div class="action-btn" style="background: white;">
+                        <div class="action-icon">📚</div>
+                        <div class="action-label">Complete tax course before Dec</div>
+                    </div>
+                    <div class="action-btn" style="background: white;">
+                        <div class="action-icon">📈</div>
+                        <div class="action-label">Rebalance your portfolio</div>
+                    </div>
+                    <div class="action-btn" style="background: white;">
+                        <div class="action-icon">🎯</div>
+                        <div class="action-label">Set a new savings goal</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Financial Health Score -->
+            <div class="chart-card" style="margin-top: 24px;">
+                <div class="section-title">Financial Health Score</div>
+                <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 32px; align-items: center;">
+                    <div style="text-align: center;">
+                        <div style="width: 200px; height: 200px; border-radius: 50%; background: conic-gradient(#1e3a8a 0% 85%, #e2e8f0 85% 100%); display: flex; align-items: center; justify-content: center; margin: 0 auto;">
+                            <div style="width: 160px; height: 160px; border-radius: 50%; background: white; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                                <div style="font-size: 48px; font-weight: bold; color: #1e3a8a;">850</div>
+                                <div style="font-size: 14px; color: #64748b;">Excellent</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">Savings Rate</span>
+                                <span style="color: #10b981;">Excellent (42%)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 84%; background: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">Debt Management</span>
+                                <span style="color: #10b981;">Perfect (0% DTI)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 100%; background: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">Emergency Fund</span>
+                                <span style="color: #10b981;">Strong (5.4 months)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 90%; background: #10b981;"></div>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">Investment Diversification</span>
+                                <span style="color: #f59e0b;">Good (Need improvement)</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%; background: #f59e0b;"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                                <span style="font-weight: 600;">Retirement Readiness</span>
+                                <span style="color: #10b981;">On Track</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%; background: #10b981;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab switching functionality
+        function switchTab(tabName) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab content
+            document.getElementById(tabName).classList.add('active');
+            
+            // Add active class to clicked tab
+            event.target.classList.add('active');
+        }
+
+        // Navigation functionality
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', function() {
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                this.classList.add('active');
+            });
+        });
+
+        // Simulate real-time updates
+        setInterval(() => {
+            const statValue = document.querySelector('.stat-value');
+            if (statValue) {
+                // Add a subtle pulse effect to show live data
+                statValue.style.transform = 'scale(1.05)';
+                setTimeout(() => {
+                    statValue.style.transform = 'scale(1)';
+                }, 200);
+            }
+        }, 5000);
+
+        // Add hover effects for interactive elements
+        document.querySelectorAll('.stat-card, .action-btn, .course-card').forEach(card => {
+            card.style.transition = 'all 0.3s ease';
+        });
+    </script>
 </body>
 </html>
